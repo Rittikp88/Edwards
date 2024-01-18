@@ -10,7 +10,7 @@ logging.basicConfig(filename='error_log.txt', level=logging.ERROR, format='%(asc
 
 def update_data():
     # Step 1: Read the Excel file with two sheets
-    excel_file_path = 'D:/Edward/Leave Update.xlsx'
+    excel_file_path = 'D:\Edward\TagUI\Leave Update.xlsx'
 
     try:
         excel_data_sheets = pd.read_excel(excel_file_path, sheet_name='Sheet1')
@@ -34,7 +34,9 @@ def update_data():
                 record = {
                     "id": sheet_data['id'],
                     "status": sheet_data['status'],
-                    "duration": sheet_data['duration']
+                    "duration": sheet_data['duration'],
+					"startDate": sheet_data['startDate'],
+                    "endDate": sheet_data['endDate']
                 }
                 # Make the PUT request
                 put_data = record
