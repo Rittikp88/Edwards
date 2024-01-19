@@ -8,7 +8,7 @@ import logging
 # Configure logging
 logging.basicConfig(filename='error_log.txt', level=logging.ERROR, format='%(asctime)s - %(levelname)s: %(message)s')
 
-def create_and_update_resources():
+def create_update_and_fetch_data():
     # Step 1: Read the Excel file with two sheets
     excel_file_path = 'D:\Edward\TagUI\Available Resource Data.xlsx'
     excel_data_sheets = pd.read_excel(excel_file_path, sheet_name='Sheet1')
@@ -32,7 +32,10 @@ def create_and_update_resources():
                 response = requests.post(api_base_url, json=record)
                 new_records.append(record)
             else:
-                print("Matched, skipping resource:", record)
+                matched_record = next(item for item in response_data if item['emp_id'] == record['emp_id'])
+                print("Matched, updating resource:", record)
+                api_endpoint = f'{api_base_url}/{matched_record["id"]}'
+                response = requests.put(api_endpoint, json=record)
         
     except Exception as e:
         error_message = f"Error processing record. Error: {str(e)}"
@@ -43,11 +46,24 @@ def create_and_update_resources():
     with open('new_records.json', 'w') as json_file:
         json.dump(new_records, json_file, indent=2)
 
-    return "Resource creation/update process completed."
+    # Step 3: Fetch data from the API and save it to Excel file
+    api_base_url = 'https://6596915d6bb4ec36ca02eba3.mockapi.io/resource'
+    response = requests.get(api_base_url)
+    response_data = response.json()
+
+    # Convert API response to DataFrame
+    df = pd.DataFrame(response_data)
+
+    # Save DataFrame to Excel file
+    retrieved_excel_file_path = 'D:\Edward\TagUI\RetrievedData.xlsx'
+    df.to_excel(retrieved_excel_file_path, index=False)
+
+    return "Resource creation/update and data retrieval process completed."
 
 # Call the function
-result = create_and_update_resources()
+result = create_update_and_fetch_data()
 print(result)
+
 
 
 py finish
