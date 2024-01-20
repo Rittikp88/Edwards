@@ -1,5 +1,3 @@
-py begin
-
 from datetime import datetime, timedelta
 import pandas as pd
 import requests
@@ -9,11 +7,11 @@ import random
 import numpy as np
 
 # Configure logging
-logging.basicConfig(filename='D:\Edward\TagUI\Mapped_Data_error.log', level=logging.ERROR, format='%(asctime)s - %(levelname)s: %(message)s')
+logging.basicConfig(filename='error_log.txt', level=logging.ERROR, format='%(asctime)s - %(levelname)s: %(message)s')
 
 def test_allocation():
     # Step 1: Read the Excel file with two sheets
-    excel_file_path = 'D:\Edward\TagUI\Mapped_Data.xlsx'
+    excel_file_path = 'D:\Edward\Mapped data.xlsx'
     excel_data_sheets = pd.read_excel(excel_file_path, sheet_name='Sheet1')
     excel_data_sheets = excel_data_sheets.replace({np.nan:None})
     json_data = excel_data_sheets.to_dict(orient='records')
@@ -71,11 +69,6 @@ def test_allocation():
 
                         print(response)
     except Exception as e:
-        logging.exception(e)
         print(e)           
 
 test_allocation()
-
-
-py finish
-echo `py_result`
