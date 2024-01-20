@@ -6,7 +6,7 @@ import json
 import logging
 
 # Configure logging
-logging.basicConfig(filename='error_log.txt', level=logging.ERROR, format='%(asctime)s - %(levelname)s: %(message)s')
+logging.basicConfig(filename='D:\Edward\TagUI\Available_resource_data_error.log', level=logging.ERROR, format='%(asctime)s - %(levelname)s: %(message)s')
 
 def create_update_and_fetch_data():
     # Step 1: Read the Excel file with two sheets
