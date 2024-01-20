@@ -23,6 +23,8 @@ def update_data():
         record_id = sheet_data['id']
         logging.info(f"Processing record with ID: {record_id}")
 
+        format = "%Y-%m-%d"
+
         try:
             if record_id:
                 # Modify the URL to include the record ID
@@ -32,7 +34,9 @@ def update_data():
                 record = {
                     "id": sheet_data['id'],
                     "status": sheet_data['status'],
-                    "duration": sheet_data['duration']
+                    "duration": sheet_data['duration'],
+                    "startDate": sheet_data['startDate'].strftime(format),
+                    "endDate": sheet_data['endDate'].strftime(format)
                 }
                 # Make the PUT request
                 put_data = record
